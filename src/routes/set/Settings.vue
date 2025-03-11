@@ -12,24 +12,15 @@
 </template>
 
 <script>
-  import { get_set } from "/src/data.js"
   export default {
-  name: 'SettingsRoute',
-    mounted() {
-      get_set(this.$route.params.set_id).then(v => {
-        this.set = v
-      }
-      )
-    },
-    data() {
-      return {
-        set: {
-          name: "",
-          category: ""
-        }
+    name: 'SettingsRoute',
+    props: {
+      set: {
+        name: "",
+        category: ""
       }
     }
-}
+  }
 </script>
 
 <style scoped>

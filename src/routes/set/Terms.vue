@@ -11,32 +11,14 @@
 </template>
 
 <script>
-  import { get_set } from "/src/data.js"
   export default {
-    name: 'RootView',
-    mounted() {
-      get_set(this.$route.params.set_id).then(v => {
-        this.set = v
-      }
-      )
-    },
-    methods: {
-      addTerm() {
-        this.set.terms.push({
-          term: "",
-          definition: ""
-        })
+    name: 'TermsRoute',
+    props: {
+      set: {
+        terms: []
       },
-      updateIndex(index, type, event) {
-        this.set.terms[index][type] = event.target.value
-      },
-    },
-    data() {
-      return {
-        set: {
-          terms: []
-        }
-      }
+      updateIndex: Function,
+      addTerm: Function
     }
   }
 </script>

@@ -3,7 +3,10 @@
     <RouterLink :to="this.route" class="back">
       <img src="/arrow-left.svg">
     </RouterLink>
-    <h1>{{name}}</h1>
+    <div>
+      <h1>{{name}}</h1>
+      <h2>{{setName}}</h2>
+    </div>
   </header>
 </template>
 
@@ -11,7 +14,8 @@
 export default {
   name: 'SetHeader',
   props: {
-    name: String
+    name: String,
+    setName: String
   },
   data() {
     const route = this.$route.path.split("/").slice(0, -1).join("/")
@@ -31,6 +35,15 @@ header {
   background: color-mix(in srgb, var(--mantle) 30%, var(--crust) 70%);
   margin-bottom: 1rem;
   padding: 0rem 0rem;
+}
+h1 {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+h2 {
+  font-size: 1rem;
+  margin-top: 2px;
+  font-weight: unset;
 }
 img {
   width: 2.5rem;
