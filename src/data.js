@@ -11,16 +11,16 @@ const sets = {
     category: "language",
     terms: [
       {
-        term: "hello",
-        definition: "there"
+        term: "1 Term",
+        definition: "1 Definition"
       },
       {
-        term: "hello",
-        definition: "there"
+        term: "2 Term",
+        definition: "2 Definition"
       },
       {
-        term: "hello",
-        definition: "there"
+        term: "3 Term",
+        definition: "3 Definition"
       },
     ]
   },
@@ -29,12 +29,12 @@ const sets = {
     category: "coding",
     terms: [
       {
-        term: "hello",
-        definition: "there"
+        term: "1 Term",
+        definition: "1 Definition"
       },
       {
-        term: "hello",
-        definition: "there"
+        term: "2 Term",
+        definition: "2 Definition"
       },
     ]
   },
@@ -43,24 +43,24 @@ const sets = {
     category: "linguistics",
     terms: [
       {
-        term: "hello",
-        definition: "there"
+        term: "1 Term",
+        definition: "1 Definition"
       },
       {
-        term: "hello",
-        definition: "there"
+        term: "2 Term",
+        definition: "2 Definition"
       },
       {
-        term: "hello",
-        definition: "there"
+        term: "3 Term",
+        definition: "3 Definition"
       },
       {
-        term: "hello",
-        definition: "there"
+        term: "4 Term",
+        definition: "4 Definition"
       },
       {
-        term: "hello",
-        definition: "there"
+        term: "5 Term",
+        definition: "5 Definition"
       },
     ]
   },
@@ -69,28 +69,28 @@ const sets = {
     category: "language",
     terms: [
       {
-        term: "hello",
-        definition: "there"
+        term: "1 Term",
+        definition: "1 Definition"
       },
       {
-        term: "hello",
-        definition: "there"
+        term: "2 Term",
+        definition: "2 Definition"
       },
       {
-        term: "hello",
-        definition: "there"
+        term: "3 Term",
+        definition: "3 Definition"
       },
       {
-        term: "hello",
-        definition: "there"
+        term: "4 Term",
+        definition: "4 Definition"
       },
       {
-        term: "hello",
-        definition: "there"
+        term: "5 Term",
+        definition: "5 Definition"
       },
       {
-        term: "hello",
-        definition: "there"
+        term: "6 Term",
+        definition: "6 Definition"
       },
     ]
   },
