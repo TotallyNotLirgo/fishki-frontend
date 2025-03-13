@@ -11,16 +11,28 @@ const sets = {
     category: "language",
     terms: [
       {
-        term: "1 Term",
-        definition: "1 Definition"
+        term: "akesi",
+        definition: "reptile"
       },
       {
-        term: "2 Term",
-        definition: "2 Definition"
+        term: "esun",
+        definition: "exchange"
       },
       {
-        term: "3 Term",
-        definition: "3 Definition"
+        term: "kili",
+        definition: "fruit"
+      },
+      {
+        term: "mani",
+        definition: "money"
+      },
+      {
+        term: "moli",
+        definition: "death"
+      },
+      {
+        term: "pimeja",
+        definition: "dark"
       },
     ]
   },

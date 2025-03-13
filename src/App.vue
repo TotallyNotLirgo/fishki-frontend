@@ -45,6 +45,12 @@ export default {
 input {
   all: unset;
 }
+button {
+  all: unset;
+}
+textarea{
+  all: unset;
+}
 select {
   all: unset;
 }
