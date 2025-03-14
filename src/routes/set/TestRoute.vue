@@ -32,6 +32,7 @@
       get_set(this.$route.params.set_id).then(v => {
         Cookies.set("fishka", JSON.stringify(v))
         this.set = v
+        console.log(this.set)
       }
       )
     },
@@ -62,7 +63,8 @@
       addTerm() {
         this.set.terms.push({
           term: "",
-          definition: ""
+          definition: "",
+          familiarity: {cards: 0, choide: 0, quiz: 0}
         })
       },
       updateIndex(index, type, event) {

@@ -11,7 +11,7 @@
       {{ answer?.definition }}
     </button>
   </div>
-  <TestFooter :callback="goNext"></TestFooter>
+  <TestFooter :callback="goNext" :familiarity="term.familiarity.choice"></TestFooter>
 </template>
 
 <script>
@@ -29,10 +29,13 @@
       getRandomTerm() {
         if (this.set.terms.length <= 0)
           return { term: "", definition: "" }
-        const term_index = Math.floor(Math.random() * this.set.terms.length)
+        this.set.terms.sort((a, b) => a.familiarity.choice - b.familiarity.choice)
+        const minFamiliarity = this.set.terms[0].familiarity.choice
+        const applicableTerms = this.set.terms.filter(v => v.familiarity.choice === minFamiliarity)
+        const term_index = Math.floor(Math.random() * applicableTerms.length)
         this.selected = -1
         this.answered = false
-        this.term = this.set.terms[term_index]
+        this.term = applicableTerms[term_index]
         this.answers = [
           {
             definition: this.term.definition,
@@ -40,7 +43,8 @@
           }
         ]
         let randomList = structuredClone(this.set.terms)
-        randomList.splice(term_index, 1)
+        const index = randomList.findIndex(v => v.term === this.term.term)
+        randomList.splice(index, 1)
         while(this.answers.length < 4 && randomList.length > 0) {
           const randomTermIndex = Math.floor(Math.random() * randomList.length)
           const randomTerm = randomList[randomTermIndex]
@@ -61,6 +65,8 @@
         }
         if (!answer.correct) {
           this.selected = index
+        } else {
+          this.term.familiarity.choice++
         }
         this.answered = true;
       },
@@ -70,6 +76,7 @@
     },
     mounted() {
       this.set = JSON.parse(Cookies.get("fishka"))
+      console.log(this.set.terms)
       this.getRandomTerm()
     },
     data() {
@@ -78,7 +85,7 @@
           name: "",
           terms: []
         },
-        term: { term: "", definition: "" },
+        term: { term: "", definition: "", familiarity: {choice: 0} },
         answers: [],
         answered: false,
         selected: -1

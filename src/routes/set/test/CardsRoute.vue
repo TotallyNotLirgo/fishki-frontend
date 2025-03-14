@@ -10,7 +10,8 @@
       </span>
     </div>
   </div>
-  <TestFooter :callback="getRandomTerm"></TestFooter>
+  <TestFooter :callback="nextTerm" :familiarity="term?.familiarity?.cards">
+  </TestFooter>
 </template>
 
 <script>
@@ -28,9 +29,17 @@
       getRandomTerm() {
         if (this.set.terms.length <= 0)
           return { term: "", definition: "" }
-        const term_index = Math.floor(Math.random() * this.set.terms.length)
-        this.term = this.set.terms[term_index]
+        this.set.terms.sort((a, b) => a.familiarity.cards - b.familiarity.cards)
+        const minFamiliarity = this.set.terms[0].familiarity.cards
+        const applicableTerms = this.set.terms.filter(v => v.familiarity.cards === minFamiliarity)
+        const term_index = Math.floor(Math.random() * applicableTerms.length)
+        this.term = applicableTerms[term_index]
         this.termsFlipped = this.flipped
+      },
+      nextTerm() {
+        this.term.familiarity.cards++
+        Cookies.set("fishka", JSON.stringify(this.term))
+        this.getRandomTerm()
       },
       toggleCard() {
         this.flipped = !this.flipped
@@ -43,8 +52,12 @@
     data() {
       return {
         set: {
+          id: 0,
           name: "",
-          terms: []
+          terms: [],
+          familiarity: {
+            cards: 0
+          }
         },
         term: { term: "", definition: "" },
         flipped: false,

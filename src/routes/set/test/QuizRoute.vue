@@ -9,7 +9,7 @@
         <strong>'{{ this.term?.definition }}'</strong>
       </div>
   </div>
-  <TestFooter :callback="validateAnswer"></TestFooter>
+  <TestFooter :callback="validateAnswer" :familiarity="term.familiarity.quiz"></TestFooter>
 </template>
 
 <script>
@@ -27,14 +27,19 @@
       getRandomTerm() {
         if (this.set.terms.length <= 0)
           return { term: "", definition: "" }
-        const term_index = Math.floor(Math.random() * this.set.terms.length)
-        this.term = this.set.terms[term_index]
+        this.set.terms.sort((a, b) => a.familiarity.quiz - b.familiarity.quiz)
+        const minFamiliarity = this.set.terms[0].familiarity.quiz
+        const applicableTerms = this.set.terms.filter(v => v.familiarity.quiz === minFamiliarity)
+        const term_index = Math.floor(Math.random() * applicableTerms.length)
+        this.term = applicableTerms[term_index]
       },
       validateAnswer() {
         if (!this.answer || this.answer.trim() === "") {
           return
         }
-        if (this.answer.trim() === this.term.definition.trim()) {
+        if (this.answer.trim().toLowerCase() === this.term.definition.trim().toLowerCase()) {
+          if (!this.isError)
+            this.term.familiarity.quiz++
           this.getRandomTerm()
           this.isError = false
           this.answer = ""
@@ -53,7 +58,7 @@
           name: "",
           terms: []
         },
-        term: { term: "", definition: "" },
+        term: { term: "", definition: "", familiarity: {quiz: 0} },
         isError: false
       }
     }

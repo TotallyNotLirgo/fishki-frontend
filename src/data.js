@@ -12,27 +12,33 @@ const sets = {
     terms: [
       {
         term: "akesi",
-        definition: "reptile"
+        definition: "reptile",
+        familiarity: {cards: 0, choice: 0, quiz: 0}
       },
       {
         term: "esun",
-        definition: "exchange"
+        definition: "exchange",
+        familiarity: {cards: 0, choice: 0, quiz: 0}
       },
       {
         term: "kili",
-        definition: "fruit"
+        definition: "fruit",
+        familiarity: {cards: 0, choice: 0, quiz: 0}
       },
       {
         term: "mani",
-        definition: "money"
+        definition: "money",
+        familiarity: {cards: 0, choice: 0, quiz: 0}
       },
       {
         term: "moli",
-        definition: "death"
+        definition: "death",
+        familiarity: {cards: 0, choice: 0, quiz: 0}
       },
       {
         term: "pimeja",
-        definition: "dark"
+        definition: "dark",
+        familiarity: {cards: 0, choice: 0, quiz: 0}
       },
     ]
   },
@@ -42,11 +48,13 @@ const sets = {
     terms: [
       {
         term: "1 Term",
-        definition: "1 Definition"
+        definition: "1 Definition",
+        familiarity: {cards: 0, choice: 0, quiz: 0}
       },
       {
         term: "2 Term",
-        definition: "2 Definition"
+        definition: "2 Definition",
+        familiarity: {cards: 0, choice: 0, quiz: 0}
       },
     ]
   },
@@ -56,23 +64,28 @@ const sets = {
     terms: [
       {
         term: "1 Term",
-        definition: "1 Definition"
+        definition: "1 Definition",
+        familiarity: {cards: 0, choice: 0, quiz: 0}
       },
       {
         term: "2 Term",
-        definition: "2 Definition"
+        definition: "2 Definition",
+        familiarity: {cards: 0, choice: 0, quiz: 0}
       },
       {
         term: "3 Term",
-        definition: "3 Definition"
+        definition: "3 Definition",
+        familiarity: {cards: 0, choice: 0, quiz: 0}
       },
       {
         term: "4 Term",
-        definition: "4 Definition"
+        definition: "4 Definition",
+        familiarity: {cards: 0, choice: 0, quiz: 0}
       },
       {
         term: "5 Term",
-        definition: "5 Definition"
+        definition: "5 Definition",
+        familiarity: {cards: 0, choice: 0, quiz: 0}
       },
     ]
   },
@@ -82,27 +95,33 @@ const sets = {
     terms: [
       {
         term: "1 Term",
-        definition: "1 Definition"
+        definition: "1 Definition",
+        familiarity: {cards: 0, choice: 0, quiz: 0}
       },
       {
         term: "2 Term",
-        definition: "2 Definition"
+        definition: "2 Definition",
+        familiarity: {cards: 0, choice: 0, quiz: 0}
       },
       {
         term: "3 Term",
-        definition: "3 Definition"
+        definition: "3 Definition",
+        familiarity: {cards: 0, choice: 0, quiz: 0}
       },
       {
         term: "4 Term",
-        definition: "4 Definition"
+        definition: "4 Definition",
+        familiarity: {cards: 0, choice: 0, quiz: 0}
       },
       {
         term: "5 Term",
-        definition: "5 Definition"
+        definition: "5 Definition",
+        familiarity: {cards: 0, choice: 0, quiz: 0}
       },
       {
         term: "6 Term",
-        definition: "6 Definition"
+        definition: "6 Definition",
+        familiarity: {cards: 0, choice: 0, quiz: 0}
       },
     ]
   },

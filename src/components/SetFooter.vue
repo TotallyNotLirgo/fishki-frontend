@@ -31,6 +31,7 @@ footer {
   bottom: 0;
   left: 0;
   width: 100vw;
+  height: 4rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   place-items: center;

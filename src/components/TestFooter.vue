@@ -1,5 +1,6 @@
 <template>
   <footer>
+    <span v-if="familiarity !== undefined">Familiarity: {{familiarity}}</span>
     <button v-on:click="callback">
       <img src="/arrow-right.svg">
     </button>
@@ -11,6 +12,7 @@ export default {
   name: 'TestFooter',
   props: {
     callback: Function,
+    familiarity: Number,
   },
 }
 </script>
