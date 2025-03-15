@@ -2,7 +2,7 @@
   <footer>
     <span v-if="familiarity !== undefined">Familiarity: {{familiarity}}</span>
     <button v-on:click="callback">
-      <img src="/arrow-right.svg">
+      <img :src="nextUrl">
     </button>
   </footer>
 </template>
@@ -14,6 +14,11 @@ export default {
     callback: Function,
     familiarity: Number,
   },
+  data() {
+    return {
+      nextUrl: process.env.BASE_URL + "arrow-right.svg",
+    }
+  }
 }
 </script>
 

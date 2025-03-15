@@ -2,7 +2,7 @@
   <RouterLink :to="`${currentRoute}/${route}`">
     <div class="option-link">
       <h2>{{ name }}</h2>
-      <img src="/arrow-right.svg">
+      <img :src="nextUrl">
     </div>
   </RouterLink>
 </template>
@@ -17,7 +17,8 @@ export default {
   data() {
     const currentRoute = this.$route.path
     return {
-        currentRoute
+        currentRoute,
+        nextUrl: process.env.BASE_URL + "arrow-right.svg",
     }
   }
 }

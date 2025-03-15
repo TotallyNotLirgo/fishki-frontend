@@ -5,12 +5,10 @@
     :saveFishka="saveFishka"
     :disabled="isSaved"
   ></SetHeader>
-  <Test v-if="isTest"></Test>
+  <Test v-if="isTest" :termLength="set.terms.length"></Test>
   <Terms
     v-if="isTerms"
     :inputTerms="set.terms"
-    :updateIndex="updateIndex"
-    :addTerm="addTerm"
     @saveFishkaTerms="saveFishkaTerms"
   ></Terms>
   <Settings
@@ -21,7 +19,11 @@
     :deleteFishkaProgress="deleteFishkaProgress"
   >
   </Settings>
-  <SetFooter :currentPath="currentPath" :setPath="setCurrentPath"></SetFooter>
+  <SetFooter
+  :currentPath="currentPath"
+  :setPath="setCurrentPath"
+  v-if="id !== 'new'"
+  ></SetFooter>
 </template>
 
 <script>
@@ -78,7 +80,6 @@ import { toRaw } from "vue";
       saveFishkaMetadata(v) {
         this.isSaved = false
         this.metadata = v
-        console.log(this.isSaved)
       },
       saveFishkaTerms(t) {
         this.isSaved = false
@@ -97,7 +98,7 @@ import { toRaw } from "vue";
         saveFishkaToDb(set).then(v => { this.set = v })
       },
       deleteFishka() {
-        deleteFishka(this.set.id).then(() => { this.$router.push("/fishki")})
+        deleteFishka(this.set.id).then(() => { this.$router.push("/")})
       },
       saveFishka() {
         this.isSaved = true
@@ -109,11 +110,17 @@ import { toRaw } from "vue";
         if (this.terms !== undefined) {
           set.terms = toRaw(this.terms)
         }
-        saveFishkaToDb(set).then(v => { this.set = v })
+        saveFishkaToDb(set).then(v => {
+          this.set = v
+          if (this.id === "new")
+            this.$router.push("/")
+
+        })
       },
     },
     data() {
       return {
+        id: Number,
         isSaved: true,
         currentPath: "test",
         currentName: "Test",

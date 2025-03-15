@@ -1,13 +1,13 @@
 <template>
   <footer>
     <button v-on:click="setPath('test')" :class="this.currentPath === 'test' ? 'active' : 'inactive'">
-      <img src="/test.svg">
+      <img :src="testUrl">
     </button>
     <button v-on:click="setPath('terms')" :class="this.currentPath === 'terms' ? 'active' : 'inactive'">
-      <img src="/terms.svg">
+      <img :src="termsUrl">
     </button>
     <button  v-on:click="setPath('settings')" :class="this.currentPath === 'settings' ? 'active' : 'inactive'">
-      <img src="/settings.svg">
+      <img :src="settingsUrl">
     </button>
   </footer>
 </template>
@@ -19,6 +19,13 @@ export default {
     currentPath: String,
     setPath: Function,
   },
+  data() {
+    return {
+      testUrl: process.env.BASE_URL + "test.svg",
+      termsUrl: process.env.BASE_URL + "terms.svg",
+      settingsUrl: process.env.BASE_URL + "settings.svg",
+    }
+  }
 }
 </script>
 

@@ -13,16 +13,16 @@ import LearnRoute from './routes/set/test/LearnRoute.vue'
 
 
 const routes = [
-  { path: "/fishki", component: RootRoute },
-  { path: "/fishki/:set_id", component: TestRoute },
-  { path: "/fishki/:set_id/learn", component: LearnRoute },
-  { path: "/fishki/:set_id/quiz", component: QuizRoute },
-  { path: "/fishki/:set_id/choice", component: ChoiceRoute },
-  { path: "/fishki/:set_id/cards", component: CardsRoute },
+  { path: "", component: RootRoute },
+  { path: "/:set_id", component: TestRoute },
+  { path: "/:set_id/learn", component: LearnRoute },
+  { path: "/:set_id/quiz", component: QuizRoute },
+  { path: "/:set_id/choice", component: ChoiceRoute },
+  { path: "/:set_id/cards", component: CardsRoute },
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory("/fishki-frontend/"),
   routes,
 })
 

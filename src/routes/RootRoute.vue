@@ -3,7 +3,7 @@
   <div class="set-list" v-for="set in sets" v-bind:key="set.id">
     <ListSet :set="set"></ListSet>
   </div>
-  <RouterLink :to="`fishki/new`">
+  <RouterLink :to="`/new`">
     <span class="add">Add</span>
   </RouterLink>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <header>
     <RouterLink :to="this.route" class="back">
-      <img src="/arrow-left.svg">
+      <img :src="backUrl">
     </RouterLink>
     <div>
       <h1>{{name}}</h1>
@@ -26,9 +26,13 @@ export default {
     disabled: Boolean
   },
   data() {
-    const route = this.$route.path.split("/").slice(0, -1).join("/")
+    let path = this.$route.path
+    if (path.endsWith("/")) path = path.slice(0, -1)
+    const route = "/" + path.split("/").slice(1, -1).join("/")
     return {
-        route
+      route: route,
+      backUrl: process.env.BASE_URL + "arrow-left.svg",
+      saveUrl: process.env.BASE_URL + "save.svg",
     }
   }
 }
