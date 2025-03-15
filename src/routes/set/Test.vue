@@ -10,15 +10,15 @@
 
 <script>
   import TestOption from "/src/components/TestOption.vue"
-export default {
-  name: 'RootView',
-  components: {
-    TestOption,
-  },
-  props: {
-    termLength: Number
+  export default {
+    name: 'RootView',
+    components: {
+      TestOption,
+    },
+    props: {
+      termLength: Number
+    }
   }
-}
 </script>
 
 <style scoped>

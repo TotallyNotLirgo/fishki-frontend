@@ -60,10 +60,10 @@
     },
     methods: {
       setCurrentPath(path) {
-        this.saveFishka()
         this.currentPath = path
         switch (path) {
           case "test":
+            this.saveFishka()
             this.currentName = "Test"
             this.isTest = true
             this.isTerms = false
@@ -149,7 +149,7 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100svh;
 }
 .inner-wrapper {
   flex: 1;

@@ -11,7 +11,7 @@
       v-on:click="saveFishka"
       :class="{hidden: disabled || saveFishka === undefined}"
     >
-      <img src="/save.svg">
+      <img :src="saveUrl">
     </button>
   </header>
 </template>
