@@ -45,7 +45,6 @@ header {
   grid-template-columns: auto 1fr auto;
   place-items: center;
   background: color-mix(in srgb, var(--mantle) 30%, var(--crust) 70%);
-  margin-bottom: 1rem;
   padding: 0rem 1rem;
 }
 h1 {

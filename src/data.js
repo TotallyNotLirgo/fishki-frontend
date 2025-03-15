@@ -157,7 +157,6 @@ export async function saveFishkaToDb(fishka) {
       fishka.terms.sort((a, b) => a.term.localeCompare(b.term))
     }
     if (fishka.id !== undefined) {
-      console.log(fishka)
       store.put(fishka);
       trans.oncomplete = _ => {
         resolve(fishka);

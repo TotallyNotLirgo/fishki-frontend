@@ -34,9 +34,6 @@ button {
   all: unset
 }
 footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
   width: 100vw;
   height: 4rem;
   display: grid;

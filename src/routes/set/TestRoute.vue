@@ -1,29 +1,34 @@
 <template>
-  <SetHeader
-    :name="currentName"
-    :setName="set?.name"
-    :saveFishka="saveFishka"
-    :disabled="isSaved"
-  ></SetHeader>
-  <Test v-if="isTest" :termLength="set.terms.length"></Test>
-  <Terms
-    v-if="isTerms"
-    :inputTerms="set.terms"
-    @saveFishkaTerms="saveFishkaTerms"
-  ></Terms>
-  <Settings
-    v-if="isSettings"
-    :set="set"
-    @saveFishka="saveFishkaMetadata"
-    :deleteFishka="deleteFishka"
-    :deleteFishkaProgress="deleteFishkaProgress"
-  >
-  </Settings>
-  <SetFooter
-  :currentPath="currentPath"
-  :setPath="setCurrentPath"
-  v-if="id !== 'new'"
-  ></SetFooter>
+  <div class="wrapper">
+    <SetHeader
+        :name="currentName"
+        :setName="set?.name"
+        :saveFishka="saveFishka"
+        :disabled="isSaved"
+        ></SetHeader>
+    <div class="inner-wrapper">
+      <Test v-if="isTest" :termLength="set.terms.length"></Test>
+      <Terms
+          v-if="isTerms"
+          :inputTerms="set.terms"
+          @saveFishkaTerms="saveFishkaTerms"
+          ></Terms>
+      <Settings
+          v-if="isSettings"
+          :set="set"
+          :isNew="id === 'new'"
+          @saveFishka="saveFishkaMetadata"
+          :deleteFishka="deleteFishka"
+          :deleteFishkaProgress="deleteFishkaProgress"
+          >
+      </Settings>
+    </div>
+    <SetFooter
+        :currentPath="currentPath"
+        :setPath="setCurrentPath"
+        v-if="id !== 'new'"
+        ></SetFooter>
+  </div>
 </template>
 
 <script>
@@ -33,7 +38,7 @@
   import Test from "./Test.vue";
   import SetFooter from "/src/components/SetFooter.vue"
   import SetHeader from "/src/components/SetHeader.vue"
-import { toRaw } from "vue";
+  import { toRaw } from "vue";
   export default {
     name: 'SetView',
     components: {
@@ -55,6 +60,7 @@ import { toRaw } from "vue";
     },
     methods: {
       setCurrentPath(path) {
+        this.saveFishka()
         this.currentPath = path
         switch (path) {
           case "test":
@@ -140,4 +146,14 @@ import { toRaw } from "vue";
 </script>
 
 <style scoped>
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.inner-wrapper {
+  flex: 1;
+  overflow: scroll;
+  padding: 1rem;
+}
 </style>

@@ -10,10 +10,10 @@
         <option value="linguistics">linguistics</option>
       </select>
     </div>
-    <button v-on:click="deleteProgress">Delete Progress</button>
-    <span :class="{toKeep: !toDeleteProgress, toDelete: toDeleteProgress}">Press again</span>
-    <button v-on:click="deleteSelf">Delete</button>
-    <span :class="{toKeep: !toDelete, toDelete: toDelete}">Press again</span>
+    <button v-if="!isNew" v-on:click="deleteProgress">Delete Progress</button>
+    <span v-if="!isNew" :class="{toKeep: !toDeleteProgress, toDelete: toDeleteProgress}">Press again</span>
+    <button v-if="!isNew" v-on:click="deleteSelf">Delete</button>
+    <span v-if="!isNew" :class="{toKeep: !toDelete, toDelete: toDelete}">Press again</span>
   </div>
 </template>
 
@@ -53,7 +53,12 @@
         this.$emit("saveFishka", { name: this.name, category: val })
       }
     },
-    props: ["set", "deleteFishka", "deleteFishkaProgress"]
+    props: {
+      set: Object,
+      deleteFishka: Function,
+      deleteFishkaProgress: Function,
+      isNew: Boolean
+    }
   }
 </script>
 
