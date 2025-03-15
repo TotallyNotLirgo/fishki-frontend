@@ -15,7 +15,8 @@
 <script>
   import SetHeader from '@/components/SetHeader.vue';
   import TestFooter from '@/components/TestFooter.vue';
-  import Cookies from 'js-cookie';
+import { getFishka, saveFishkaToDb } from '@/data';
+import { toRaw } from 'vue';
 
   export default {
     name: 'QuizRoute',
@@ -32,6 +33,7 @@
         const applicableTerms = this.set.terms.filter(v => v.familiarity.quiz === minFamiliarity)
         const term_index = Math.floor(Math.random() * applicableTerms.length)
         this.term = applicableTerms[term_index]
+        this.termIndex = this.set.terms.findIndex(v => v.term === this.term.term)
       },
       validateAnswer() {
         if (!this.answer || this.answer.trim() === "") {
@@ -40,6 +42,8 @@
         if (this.answer.trim().toLowerCase() === this.term.definition.trim().toLowerCase()) {
           if (!this.isError)
             this.term.familiarity.quiz++
+          this.set.terms[this.termIndex] = this.term
+          saveFishkaToDb(toRaw(structuredClone(this.set)))
           this.getRandomTerm()
           this.isError = false
           this.answer = ""
@@ -49,15 +53,20 @@
       }
     },
     mounted() {
-      this.set = JSON.parse(Cookies.get("fishka"))
-      this.getRandomTerm()
+      this.id = this.$route.params.set_id
+      getFishka(+this.id).then(v => {
+        this.set = v
+        this.getRandomTerm()
+      })
     },
     data() {
       return {
+        answer: "",
         set: {
           name: "",
           terms: []
         },
+        termIndex: 0,
         term: { term: "", definition: "", familiarity: {quiz: 0} },
         isError: false
       }

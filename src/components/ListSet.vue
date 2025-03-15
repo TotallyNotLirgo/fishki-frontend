@@ -1,5 +1,5 @@
 <template>
-  <RouterLink :to="`fishki/${set.set_id}`">
+  <RouterLink :to="`fishki/${set.id}`">
     <div class="set-link">
       <h2>{{ set.name }}</h2>
       <span class="category">{{ set.category }} </span>

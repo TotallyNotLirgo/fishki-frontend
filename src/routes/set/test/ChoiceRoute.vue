@@ -17,7 +17,8 @@
 <script>
   import SetHeader from '@/components/SetHeader.vue';
   import TestFooter from '@/components/TestFooter.vue';
-  import Cookies from 'js-cookie';
+import { getFishka, saveFishkaToDb } from '@/data';
+import { toRaw } from 'vue';
 
   export default {
     name: 'ChoiceRoute',
@@ -43,8 +44,8 @@
           }
         ]
         let randomList = structuredClone(this.set.terms)
-        const index = randomList.findIndex(v => v.term === this.term.term)
-        randomList.splice(index, 1)
+        this.termIndex = randomList.findIndex(v => v.term === this.term.term)
+        randomList.splice(this.termIndex, 1)
         while(this.answers.length < 4 && randomList.length > 0) {
           const randomTermIndex = Math.floor(Math.random() * randomList.length)
           const randomTerm = randomList[randomTermIndex]
@@ -71,13 +72,19 @@
         this.answered = true;
       },
       goNext() {
-        if (this.answered) this.getRandomTerm()
+        if (this.answered) {
+          this.set.terms[this.termIndex] = this.term
+          saveFishkaToDb(toRaw(structuredClone(this.set)))
+          this.getRandomTerm()
+        }
       }
     },
     mounted() {
-      this.set = JSON.parse(Cookies.get("fishka"))
-      console.log(this.set.terms)
-      this.getRandomTerm()
+      this.id = this.$route.params.set_id
+      getFishka(+this.id).then(v => {
+        this.set = v
+        this.getRandomTerm()
+      })
     },
     data() {
       return {
@@ -85,6 +92,7 @@
           name: "",
           terms: []
         },
+        termIndex: 0,
         term: { term: "", definition: "", familiarity: {choice: 0} },
         answers: [],
         answered: false,

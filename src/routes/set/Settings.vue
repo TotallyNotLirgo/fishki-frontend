@@ -1,29 +1,80 @@
 <template>
-  <div class="input-wrapper">
-    <div class="input-title">Name:</div>
-    <input :value="set.name">
-    <div class="input-title">Category:</div>
-    <select name="category">
-      <option value="coding" :selected="set.category == 'coding'">coding</option>
-      <option value="language" :selected="set.category == 'language'">language</option>
-      <option value="linguistics" :selected="set.category == 'linguistics'">linguistics</option>
-    </select>
+  <div class="settings-wrapper">
+    <div class="input-wrapper">
+      <div class="input-title">Name:</div>
+      <input v-model="name">
+      <div class="input-title">Category:</div>
+      <select name="category" v-model="category">
+        <option value="language">language</option>
+        <option value="coding">coding</option>
+        <option value="linguistics">linguistics</option>
+      </select>
+    </div>
+    <button v-on:click="deleteProgress">Delete Progress</button>
+    <span :class="{toKeep: !toDeleteProgress, toDelete: toDeleteProgress}">Press again</span>
+    <button v-on:click="deleteSelf">Delete</button>
+    <span :class="{toKeep: !toDelete, toDelete: toDelete}">Press again</span>
   </div>
 </template>
 
 <script>
   export default {
     name: 'SettingsRoute',
-    props: {
-      set: {
-        name: "",
-        category: ""
+    data() {
+      return {
+        toDelete: false,
+        toDeleteProgress: false,
+        name: this.set?.name,
+        category: this.set?.category,
       }
-    }
+    },
+    methods: {
+      deleteSelf() {
+        if (this.toDelete) {
+          this.deleteFishka()
+        } else {
+          this.toDelete = true
+        }
+      },
+      deleteProgress() {
+        if (this.toDeleteProgress) {
+          this.deleteFishkaProgress()
+          this.toDeleteProgress = false
+        } else {
+          this.toDeleteProgress = true
+        }
+      }
+    },
+    watch: {
+      name(val) {
+        this.$emit("saveFishka", { name: val, category: this.category })
+      },
+      category(val) {
+        this.$emit("saveFishka", { name: this.name, category: val })
+      }
+    },
+    props: ["set", "deleteFishka", "deleteFishkaProgress"]
   }
 </script>
 
 <style scoped>
+.settings-wrapper {
+  display: grid;
+  place-items: center;
+}
+.toKeep {
+  visibility: hidden;
+}
+.toDelete {
+  color: var(--red);
+}
+button {
+  font-size: 2rem;
+  color: var(--red);
+  background: var(--mantle);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
 .input-wrapper {
   display: grid;
   grid-template-columns: auto 1fr;

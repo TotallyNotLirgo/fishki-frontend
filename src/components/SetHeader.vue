@@ -7,6 +7,12 @@
       <h1>{{name}}</h1>
       <h2>{{setName}}</h2>
     </div>
+    <button
+      v-on:click="saveFishka"
+      :class="{hidden: disabled || saveFishka === undefined}"
+    >
+      <img src="/save.svg">
+    </button>
   </header>
 </template>
 
@@ -15,7 +21,9 @@ export default {
   name: 'SetHeader',
   props: {
     name: String,
-    setName: String
+    setName: String,
+    saveFishka: Function,
+    disabled: Boolean
   },
   data() {
     const route = this.$route.path.split("/").slice(0, -1).join("/")
@@ -28,13 +36,13 @@ export default {
 
 <style scoped>
 header {
-  width: 100vw;
+  width: calc(100vw - 2rem);
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: auto 1fr auto;
   place-items: center;
   background: color-mix(in srgb, var(--mantle) 30%, var(--crust) 70%);
   margin-bottom: 1rem;
-  padding: 0rem 0rem;
+  padding: 0rem 1rem;
 }
 h1 {
   margin-top: 0.5rem;
@@ -49,12 +57,13 @@ img {
   width: 2.5rem;
 }
 .back {
-  position: absolute;
-  left: 1rem;
   display: grid;
   place-items: center;
 }
 .back:hover {
   background: color-mix(in srgb, var(--surface-0) 30%, var(--mantle) 70%);
+}
+.hidden {
+  visibility: hidden;
 }
 </style>

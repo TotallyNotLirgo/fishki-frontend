@@ -1,24 +1,37 @@
 <template>
-  <SetHeader :name="currentName" :setName="set?.name"></SetHeader>
+  <SetHeader
+    :name="currentName"
+    :setName="set?.name"
+    :saveFishka="saveFishka"
+    :disabled="isSaved"
+  ></SetHeader>
   <Test v-if="isTest"></Test>
   <Terms
     v-if="isTerms"
-    :set="set"
+    :inputTerms="set.terms"
     :updateIndex="updateIndex"
     :addTerm="addTerm"
+    @saveFishkaTerms="saveFishkaTerms"
   ></Terms>
-  <Settings v-if="isSettings" :set="set"></Settings>
+  <Settings
+    v-if="isSettings"
+    :set="set"
+    @saveFishka="saveFishkaMetadata"
+    :deleteFishka="deleteFishka"
+    :deleteFishkaProgress="deleteFishkaProgress"
+  >
+  </Settings>
   <SetFooter :currentPath="currentPath" :setPath="setCurrentPath"></SetFooter>
 </template>
 
 <script>
-  import { get_set } from "@/data";
+  import { saveFishkaToDb, getFishka, deleteFishka } from "@/data";
   import Settings from "./Settings.vue";
   import Terms from "./Terms.vue";
   import Test from "./Test.vue";
   import SetFooter from "/src/components/SetFooter.vue"
   import SetHeader from "/src/components/SetHeader.vue"
-  import Cookies from "js-cookie";
+import { toRaw } from "vue";
   export default {
     name: 'SetView',
     components: {
@@ -29,12 +42,14 @@
       SetHeader,
     },
     mounted() {
-      get_set(this.$route.params.set_id).then(v => {
-        Cookies.set("fishka", JSON.stringify(v))
-        this.set = v
-        console.log(this.set)
+      this.id = this.$route.params.set_id
+      if (this.id === "new") {
+        this.setCurrentPath("settings")
+      } else {
+        getFishka(+this.id).then(v => {
+          this.set = v
+        })
       }
-      )
     },
     methods: {
       setCurrentPath(path) {
@@ -60,24 +75,53 @@
             break
         }
       },
-      addTerm() {
-        this.set.terms.push({
-          term: "",
-          definition: "",
-          familiarity: {cards: 0, choide: 0, quiz: 0}
-        })
+      saveFishkaMetadata(v) {
+        this.isSaved = false
+        this.metadata = v
+        console.log(this.isSaved)
       },
-      updateIndex(index, type, event) {
-        this.set.terms[index][type] = event.target.value
+      saveFishkaTerms(t) {
+        this.isSaved = false
+        this.terms = t
+      },
+      deleteFishkaProgress() {
+        this.isSaved = true
+        const set = structuredClone(toRaw(this.set))
+        if (this.metadata !== undefined) {
+          set.name = this.metadata.name
+          set.category = this.metadata.category
+        }
+        set.terms.forEach(v => {
+          v.familiarity = {cards: 0, choice: 0, quiz: 0, learn: 0}
+        })
+        saveFishkaToDb(set).then(v => { this.set = v })
+      },
+      deleteFishka() {
+        deleteFishka(this.set.id).then(() => { this.$router.push("/fishki")})
+      },
+      saveFishka() {
+        this.isSaved = true
+        const set = structuredClone(this.set)
+        if (this.metadata !== undefined) {
+          set.name = this.metadata.name
+          set.category = this.metadata.category
+        }
+        if (this.terms !== undefined) {
+          set.terms = toRaw(this.terms)
+        }
+        saveFishkaToDb(set).then(v => { this.set = v })
       },
     },
     data() {
       return {
+        isSaved: true,
         currentPath: "test",
         currentName: "Test",
         isSettings: false,
         isTerms: false,
         isTest: true,
+        terms: undefined,
+        metadata: undefined,
         set: {
           name: "",
           category: "",

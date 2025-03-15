@@ -2,10 +2,10 @@
   <SetHeader name="Cards" :setName="this.set?.name"></SetHeader>
   <div class="card-holder" v-on:click="toggleCard">
     <div class="inner-card-holder" :class="{'card-flipped': flipped}">
-      <span class="card-face" :class="{'card-back': termsFlipped}">
+      <span class="card-face">
         {{term?.term}}
       </span>
-      <span class="card-face" :class="{'card-back': !termsFlipped}">
+      <span class="card-face card-back">
         {{term?.definition}}
       </span>
     </div>
@@ -17,7 +17,8 @@
 <script>
   import SetHeader from '@/components/SetHeader.vue';
   import TestFooter from '@/components/TestFooter.vue';
-  import Cookies from 'js-cookie';
+import { getFishka, saveFishkaToDb } from '@/data';
+import { toRaw } from 'vue';
 
   export default {
     name: 'CardsRoute',
@@ -34,23 +35,29 @@
         const applicableTerms = this.set.terms.filter(v => v.familiarity.cards === minFamiliarity)
         const term_index = Math.floor(Math.random() * applicableTerms.length)
         this.term = applicableTerms[term_index]
-        this.termsFlipped = this.flipped
+        this.termIndex = this.set.terms.findIndex(v => v.term === this.term.term)
       },
       nextTerm() {
         this.term.familiarity.cards++
-        Cookies.set("fishka", JSON.stringify(this.term))
-        this.getRandomTerm()
+        this.set.terms[this.termIndex] = this.term
+        saveFishkaToDb(toRaw(structuredClone(this.set)))
+        this.flipped = false
+        setTimeout(this.getRandomTerm, 400)
       },
       toggleCard() {
         this.flipped = !this.flipped
       }
     },
     mounted() {
-      this.set = JSON.parse(Cookies.get("fishka"))
-      this.getRandomTerm()
+      this.id = this.$route.params.set_id
+      getFishka(+this.id).then(v => {
+        this.set = v
+        this.getRandomTerm()
+      })
     },
     data() {
       return {
+        id: 0,
         set: {
           id: 0,
           name: "",
@@ -59,9 +66,9 @@
             cards: 0
           }
         },
+        termIndex: 0,
         term: { term: "", definition: "" },
         flipped: false,
-        termsFlipped: false,
       }
     }
   }
